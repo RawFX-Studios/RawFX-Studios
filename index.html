@@ -363,20 +363,22 @@
             color: var(--color-text-secondary);
         }
 
-        /* --- Portfolio Section (Image Slider) --- */
+        /* --- Portfolio Section (Image Slider & Video) --- */
         .portfolio-image-container {
             position: relative;
             width: 100%;
             padding-top: 56.25%; /* 16:9 Aspect Ratio */
             height: 0;
             overflow: hidden;
+            background-color: #000; /* Fallback bg for video/image */
         }
-        .portfolio-image, .portfolio-video {
+        
+        .portfolio-video,
+        .portfolio-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
-            background-color: #000;
             position: absolute;
             top: 0;
             left: 0;
@@ -390,6 +392,7 @@
             padding-top: 56.25%; /* 16:9 Aspect Ratio */
             height: 0;
             overflow: hidden; 
+            background-color: #000; /* Fallback bg */
         }
 
         .image-comparison-slider img {
@@ -474,7 +477,7 @@
             margin: 0 auto;
         }
         .about-image {
-            /* THIS IS THE CHANGE: border-radius: 50% makes it a circle */
+            /* border-radius: 50% makes it a circle */
             border-radius: 50%;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             width: 100%;
@@ -762,7 +765,7 @@
         <nav class="container">
             <!-- Logo -->
             <a href="#" class="logo-link">
-                <!-- THIS IS THE CHANGE: Using rfx-logo.jpg -->
+                <!-- Using rfx-logo.jpg -->
                 <img src="rfx-logo.jpg" alt="RawFX Studios Logo" class="logo-image" 
                      onerror="this.style.display='none'; const t = document.createTextNode('RawFX-Studios'); this.parentElement.appendChild(t);">
             </a>
@@ -844,12 +847,13 @@
                         <span class="image-label label-after">After</span>
                         <span class="image-label label-before">Before</span>
                         
-                        <!-- Placeholder images -->
-                        <img src="https://placehold.co/1280x720/1a1a1a/404040?text=GRADING+-+AFTER" alt="After Color Grading" class="after-image" 
-                             onerror="this.src='https://placehold.co/1280x720/1a1a1a/404040?text=Image+Not+Found'">
+                        <!-- Using grading-after.jpg -->
+                        <img src="grading-after.jpg" alt="After Color Grading" class="after-image" 
+                             onerror="this.src='https://placehold.co/1280x720/1a1a1a/404040?text=grading-after.jpg+missing'">
                         
-                        <img src="https://placehold.co/1280x720/b0b0b0/c0c0c0?text=GRADING+-+BEFORE" alt="Before Color Grading" class="before-image"
-                             onerror="this.src='https://placehold.co/1280x720/b0b0b0/c0c0c0?text=Image+Not+Found'">
+                        <!-- Using grading-before.jpg -->
+                        <img src="grading-before.jpg" alt="Before Color Grading" class="before-image"
+                             onerror="this.src='https://placehold.co/1280x720/b0b0b0/c0c0c0?text=grading-before.jpg+missing'">
                         
                         <div class="slider-handle"></div>
                     </div>
@@ -862,11 +866,11 @@
                 <!-- Item 2: Motion Graphics -->
                 <div class="glass-card">
                     <div class="portfolio-image-container">
-                        <!-- Placeholder -->
-                        <div style="width:100%; height:100%; background:#000; display:flex; align-items:center; justify-content:center; position:absolute; top:0; left:0;">
-                            <ion-icon name="play-circle-outline" style="font-size: 5rem; color: var(--color-accent);"></ion-icon>
-                        </div>
-                        <!-- <img src="path/to/showreel-thumb.jpg" alt="VFX Showreel Thumbnail" class="portfolio-image"> -->
+                        <!-- Using motion-graphics.mp4 -->
+                        <video controls loop muted autoplay playsinline class="portfolio-video">
+                            <source src="motion-graphics.mp4" type="video/mp4">
+                            Your browser does not support the video tag. (motion-graphics.mp4)
+                        </video>
                     </div>
                     <div class="card-content">
                         <h3 class="card-title text-left">Motion Graphics</h3>
@@ -877,10 +881,11 @@
                 <!-- Item 3: Video Edit -->
                 <div class="glass-card">
                     <div class="portfolio-image-container">
-                        <!-- Placeholder -->
-                        <div style="width:100%; height:100%; background:#000; display:flex; align-items:center; justify-content:center; position:absolute; top:0; left:0;">
-                            <ion-icon name="cut-outline" style="font-size: 5rem; color: var(--color-accent);"></ion-icon>
-                        </div>
+                        <!-- Using video-edit.mp4 -->
+                         <video controls loop muted autoplay playsinline class="portfolio-video">
+                            <source src="video-edit.mp4" type="video/mp4">
+                            Your browser does not support the video tag. (video-edit.mp4)
+                        </video>
                     </div>
                     <div class="card-content">
                         <h3 class="card-title text-left">Video Edit</h3>
@@ -899,8 +904,9 @@
 
             <!-- Image Container -->
             <div class="about-image-container" style="margin-bottom: 3rem;">
-                <img src="https://placehold.co/600x600/1a1a1a/404040?text=Atanu+Debgharia" alt="A photo of Atanu Debgharia" class="about-image"
-                     onerror="this.src='https://placehold.co/600x600/1a1a1a/404040?text=Image+Not+Found'">
+                <!-- Using profile-pic.jpg -->
+                <img src="profile-pic.jpg" alt="A photo of Atanu Debgharia" class="about-image"
+                     onerror="this.src='https://placehold.co/600x600/1a1a1a/404040?text=profile-pic.jpg+missing'">
             </div>
 
             <!-- Text Content -->
@@ -932,8 +938,7 @@
             <p class="contact-subtitle">
                 Have a project in mind or just want to say hi? My inbox is always open.
                 Fill out the form below or send me an email.
-            </p>
-
+            </Nothing>
             <!-- Formspree Contact Form -->
             <form id="contact-form" action="https://formspree.io/f/xldopzav" method="POST">
                 <div class="form-grid">
@@ -1143,7 +1148,8 @@
 
                     for (let i = 0; i < newNebulaCount; i++) {
                         const radius = Math.random() * 120 + 60; // 60px to 180px
-                        const x = Math.random() * canvas.width;
+                        // *** THIS IS THE FIX: canvas.width (not canvas.world) ***
+                        const x = Math.random() * canvas.width; 
                         const y = Math.random() * canvas.height;
                         const dx = (Math.random() - 0.5) * 0.05;
                         const dy = (Math.random() - 0.5) * 0.05;
@@ -1220,7 +1226,7 @@
                     const data = new FormData(e.target);
                     const originalButtonText = submitButton.innerHTML;
                     
-                    // THIS IS THE FIX: Added inline style for vertical-align
+                    // Aligned icon
                     submitButton.innerHTML = `Sending... <ion-icon name="paper-plane-outline" style="margin-left: 0.5rem; vertical-align: middle;"></ion-icon>`;
                     submitButton.disabled = true;
 
