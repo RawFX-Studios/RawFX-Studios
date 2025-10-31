@@ -3,64 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atanu Debgharia - RawFX-Studios </title>
+    <!-- Updated Title --><title>Atanu Debgharia - VFX & Post-Production</title>
 
-    <!-- Google Fonts: Poppins & Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Google Fonts --><link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- Ionicons (for social media icons) -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <!-- Ionicons --><script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-    <!-- Embedded CSS -->
-    <style>
-        /* --- Root Variables: NEW Black & Diamond Theme --- */
+    <!-- Internal CSS --><style>
+        /* --- Root Variables: Black & Diamond Theme --- */
         :root {
             --font-heading: 'Poppins', sans-serif;
             --font-body: 'Inter', sans-serif;
-
-            /* Deep black background */
-            --color-bg: #0a0a0a;
-            
-            /* Bright "Diamond" white and grays */
+            --color-bg: #0a0a0a; /* Solid black background */
             --color-text-primary: #f0f0f0;
             --color-text-secondary: #a0a0a0;
             --color-text-muted: #666666;
-            
-            /* Main "Diamond" accent */
             --color-accent: #ffffff;
             --color-accent-hover: #e0e0e0;
-            
-            /* Glass/Card colors */
-            --color-glass-bg: rgba(26, 26, 26, 0.7); /* Darker glass */
+            --color-glass-bg: rgba(26, 26, 26, 0.7);
             --color-glass-border: rgba(100, 100, 100, 0.5);
-            
-            /* Particle color */
-            --color-particle: rgba(224, 232, 255, 0.7); /* Light blue/white 'dust' */
+            /* Updated particle color to a subtle blueish-white */
+            --color-particle: rgba(173, 216, 230, 0.7); /* Light blue */
         }
 
         /* --- Animations --- */
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes heroClickPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.01); } /* A subtle pulse */
+            100% { transform: scale(1); }
+        }
+        .hero-clicked {
+            animation: heroClickPulse 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
         }
 
         /* --- Responsive Reset & Base --- */
-        html {
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        *, *:before, *:after {
-            box-sizing: inherit;
-        }
+        html { box-sizing: border-box; font-size: 16px; }
+        *, *:before, *:after { box-sizing: inherit; }
 
         body {
             background-color: var(--color-bg);
@@ -72,16 +67,18 @@
             -moz-osx-font-smoothing: grayscale;
             overflow-wrap: break-word;
             word-wrap: break-word;
+            /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
         
-        /* --- NEW: Particle Canvas --- */
         #particle-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Behind all content */
+            z-index: -1;
+            background-color: transparent; /* Ensure canvas background is transparent */
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -112,19 +109,10 @@
             padding-left: 1.5rem;
             padding-right: 1.5rem;
         }
-        .py-20 {
-            padding-top: 5rem;
-            padding-bottom: 5rem;
-        }
-        .text-center {
-            text-align: center;
-        }
-        .text-left {
-            text-align: left;
-        }
-        .hidden {
-            display: none !important;
-        }
+        .py-20 { padding-top: 5rem; padding-bottom: 5rem; }
+        .text-center { text-align: center; }
+        .text-left { text-align: left; }
+        .hidden { display: none !important; }
         .sr-only {
             position: absolute;
             width: 1px;
@@ -143,7 +131,6 @@
             top: 0;
             z-index: 50;
             width: 100%;
-            /* Updated to black-based glass */
             background-color: rgba(10, 10, 10, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -158,11 +145,21 @@
             padding-bottom: 1rem;
         }
 
-        .logo-text {
-            font-size: 1.5rem;
+        .logo-link {
+            display: block;
+            padding: 0.25rem 0; 
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
             font-weight: 700;
             color: var(--color-accent);
             text-decoration: none;
+        }
+        .logo-image {
+            height: 2.5rem; /* Adjust as needed */
+            width: auto;
+            object-fit: contain;
+            /* Optional: Add a filter for color if your logo isn't white */
+            /* filter: brightness(0) invert(1); */
         }
 
         .mobile-menu-toggle {
@@ -192,10 +189,10 @@
 
         .nav-button {
             background-color: var(--color-accent);
-            color: #000000; /* Black text on white button */
+            color: #000000;
             padding: 0.5rem 1.25rem;
             border-radius: 9999px;
-            font-weight: 700; /* Bolder */
+            font-weight: 700;
             text-decoration: none;
             transition: all 0.3s ease;
         }
@@ -205,18 +202,43 @@
         }
 
         .mobile-menu {
-            display: none;
-            margin: 0 1rem 1rem 1rem;
-            border-radius: 0 0 0.5rem 0.5rem;
+            position: absolute; 
+            top: 4.5rem; 
+            right: 1.5rem;
+            width: 250px; 
+            background-color: rgba(10, 10, 10, 0.65); 
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--color-glass-border);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            /* Hidden by default */
+            opacity: 0;
+            transform: translateY(-10px);
+            visibility: hidden;
+            transition: all 0.3s ease-out;
         }
+
+        .mobile-menu.active {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
         .mobile-nav-link {
             display: block;
-            padding: 0.75rem 1.5rem;
             color: var(--color-text-primary);
             text-decoration: none;
+            font-weight: 500;
+            padding: 0.75rem 1rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s ease;
         }
-        .mobile-nav-link:hover {
-            background-color: rgba(30, 41, 59, 0.5);
+        .mobile-nav-link:hover,
+        .mobile-nav-link:active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--color-accent);
         }
         .mobile-nav-link.accent {
             color: var(--color-accent);
@@ -224,12 +246,13 @@
 
         /* --- Hero Section --- */
         .hero-section {
-            min-height: 90vh;
+            /* Changed to 100vh for better centering */
+            min-height: 100vh;
             display: grid;
             place-items: center;
             text-align: center;
-            padding: 5rem 1.5rem;
-            margin-top: -5.5rem;
+            padding: 0 1.5rem; /* Removed fixed top/bottom padding */
+            margin-top: -5.5rem; /* Pulls up to go behind header */
             z-index: 1;
             position: relative;
         }
@@ -238,10 +261,10 @@
             margin: 0 auto;
         }
         
-        /* --- Hero Slide-Down Animation --- */
         .hero-content > * {
-            opacity: 0; /* Hidden by default */
+            opacity: 0;
         }
+        
         .hero-title {
             font-weight: 800;
             color: var(--color-accent);
@@ -254,6 +277,7 @@
             color: var(--color-text-secondary);
             animation: slideDown 0.8s ease-out 0.3s forwards;
         }
+        
         .hero-services-list {
             margin-top: 2rem;
             display: flex;
@@ -336,45 +360,111 @@
             color: var(--color-text-secondary);
         }
 
-        /* Portfolio Card Specifics */
+        /* --- Portfolio Section (Image Slider) --- */
         .portfolio-image-container {
             position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
         }
         .portfolio-image, .portfolio-video {
             width: 100%;
-            height: 18rem; /* 72 */
+            height: 100%;
             object-fit: cover;
             display: block;
-            background-color: #000; /* Black bg for video loading */
+            background-color: #000;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
+
+        /* Image comparison slider specific styles */
+        .image-comparison-slider {
+            position: relative;
+            width: 100%;
+            /* Changed height to be aspect-ratio based */
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden; 
+        }
+
+        .image-comparison-slider img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+
+        .image-comparison-slider .before-image {
+            width: 50%;
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background-color: var(--color-accent);
+            transform: translateX(-50%);
+            cursor: ew-resize;
+            z-index: 10;
+        }
+
+        .slider-handle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background-color: var(--color-accent);
+            border-radius: 50%;
+            border: 2px solid var(--color-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto;
+        }
+        .slider-handle::after {
+            content: '\21D4'; /* Left-right arrow unicode */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--color-bg);
+            font-size: 1.2rem;
+            font-weight: bold;
+            pointer-events: none;
+            line-height: 1;
+        }
+
+        .image-label {
+            position: absolute;
+            padding: 0.25rem 0.75rem;
+            background-color: transparent;
+            color: var(--color-accent);
+            font-size: 0.8rem;
+            font-weight: 500;
+            z-index: 5;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+        }
+        .label-after { top: 0.75rem; left: 0.75rem; }
+        .label-before { top: 0.75rem; right: 0.75rem; }
+
+
         .card-content {
             padding: 1.5rem;
         }
-        .portfolio-toggle {
-            width: 100%;
-            background-color: #333;
-            color: var(--color-accent);
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--color-text-muted);
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-        }
-        .portfolio-toggle:hover {
-            background-color: var(--color-accent);
-            color: #000;
-            border-color: var(--color-accent);
-        }
 
         /* --- About Section --- */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            align-items: center;
-            gap: 3rem;
-        }
+        /* Removed .about-grid styles */
         .about-image-container {
             max-width: 400px;
             margin: 0 auto;
@@ -410,7 +500,6 @@
         /* --- Niche CTA Section --- */
         .cta-section {
             padding: 5rem 1.5rem;
-            /* Updated to a monochrome 'diamond' gradient */
             background-image: linear-gradient(to right, #333, #111);
             border-top: 1px solid var(--color-glass-border);
             border-bottom: 1px solid var(--color-glass-border);
@@ -446,16 +535,49 @@
             margin-left: auto;
             margin-right: auto;
         }
-        .contact-buttons {
+        
+        /* Contact Form Styles */
+        #contact-form {
+            max-width: 48rem;
+            margin: 0 auto 4rem auto;
+            text-align: left;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        .form-group {
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            gap: 1.5rem;
-            max-width: 48rem;
-            margin-left: auto;
-            margin-right: auto;
         }
-        .contact-button {
+        .form-group label {
+            color: var(--color-text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+        .form-input,
+        .form-textarea {
+            background-color: #1a1a1a;
+            border: 1px solid var(--color-glass-border);
+            border-radius: 0.375rem;
+            padding: 0.75rem 1rem;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--color-text-primary);
+            transition: border-color 0.3s ease;
+        }
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+        }
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .submit-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -463,39 +585,41 @@
             font-weight: 700;
             padding: 1rem 2rem;
             border-radius: 9999px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
             text-decoration: none;
             transition: all 0.3s ease;
             width: 100%;
-        }
-        .contact-button ion-icon {
-            margin-right: 0.5rem;
-            font-size: 1.25rem;
-        }
-        
-        /* Themed contact buttons */
-        .contact-button.whatsapp {
-            background-color: transparent;
-            color: #25D366;
-            border: 2px solid #25D366;
-        }
-        .contact-button.whatsapp:hover {
-            background-color: #25D366;
-            color: #ffffff;
-            transform: scale(1.05);
-        }
-        .contact-button.call {
+            cursor: pointer;
             background-color: var(--color-accent);
             color: #000;
             border: 2px solid var(--color-accent);
         }
-        .contact-button.call:hover {
+        .submit-button:hover {
             background-color: var(--color-accent-hover);
             border-color: var(--color-accent-hover);
             transform: scale(1.05);
         }
+        .submit-button:active {
+            transform: scale(0.95);
+        }
+        .submit-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        #form-status {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+        #form-status.success {
+            color: #25D366; /* Green */
+        }
+        #form-status.error {
+            color: #ff4d4d; /* Red */
+        }
 
-        /* Social Links */
+        /* --- Social Links (Updated) --- */
         .social-links-container {
             margin-top: 4rem;
         }
@@ -511,449 +635,645 @@
         .social-link {
             color: var(--color-text-muted);
             transition: all 0.3s ease;
+            font-size: 2rem; /* Larger icons */
         }
         .social-link:hover {
             color: var(--color-accent);
             transform: scale(1.1);
         }
-        .social-link ion-icon {
-            font-size: 2.25rem;
-        }
 
         /* --- Footer --- */
         .footer {
+            padding: 3rem 1.5rem;
             border-top: 1px solid var(--color-glass-border);
-            padding: 2rem 0;
-        }
-        .footer-content {
-            color: var(--color-text-muted);
+            text-align: center;
         }
         .footer-brand {
             font-weight: 700;
-            color: var(--color-text-primary);
-            margin: 0;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
         }
-        .footer-copy {
+        .footer-copyright {
+            color: var(--color-text-muted);
             font-size: 0.875rem;
-            margin-top: 0.25rem;
         }
 
-        /* --- Animations --- */
+        /* --- Scroll to Top Button --- */
+        #scroll-to-top {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background-color: var(--color-accent);
+            color: #000;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        #scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        #scroll-to-top:hover {
+            background-color: var(--color-accent-hover);
+            transform: scale(1.1);
+        }
+        #scroll-to-top ion-icon {
+            font-size: 1.5rem;
+        }
+
+        /* --- Fade-in on Scroll --- */
         .fade-in-section {
             opacity: 0;
-            transform: translateY(25px);
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         .fade-in-section.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
-        
-        /* Button Click Animation */
-        .nav-button, .hero-button, .portfolio-toggle, .contact-button {
-            transition: all 0.3s ease, transform 0.1s ease;
-        }
-        .nav-button:active, .hero-button:active, .portfolio-toggle:active, .contact-button:active {
-            transform: scale(0.95);
-            filter: brightness(0.9);
-        }
 
-        /* --- Media Queries (Responsive Design) --- */
+
+        /* --- Media Queries for Responsiveness --- */
         @media (min-width: 640px) {
-            .hero-title {
-                font-size: clamp(3.25rem, 8vw, 6rem);
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
-            .section-title {
-                font-size: clamp(2rem, 7vw, 3.75rem);
+            .form-group.col-span-2 {
+                grid-column: span 2 / span 2;
             }
-            .cta-niche-box {
-                font-size: clamp(1.75rem, 8vw, 3rem);
-            }
-            .contact-buttons {
-                flex-direction: row;
-            }
-            .contact-button {
+            .submit-button {
                 width: auto;
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+            #contact-form {
+                text-align: center;
             }
         }
 
         @media (min-width: 768px) {
-            .mobile-menu-toggle {
-                display: none;
-            }
-            .desktop-menu {
-                display: flex;
-            }
-            .mobile-menu {
-                display: none !important;
-            }
-            .grid-3-col {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .grid-2-col {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .about-grid {
-                grid-template-columns: 1fr 2fr;
-            }
-        }
-    </style>
-
-</head>
-<body class="antialiased">
-    
-    <!-- Particle Canvas -->
-    <canvas id="particle-canvas"></canvas>
-
-    <!-- Header / Navigation -->
-    <header class="sticky-header">
-        <nav class="container">
-            <a href="#" class="logo-text">Atanu Debgharia</a>
+            .mobile-menu-toggle { display: none; }
+            .mobile-menu { display: none; }
+            .desktop-menu { display: flex; }
             
-            <button id="mobile-menu-button" class="mobile-menu-toggle">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
+            .grid-2-col { grid-template-columns: repeat(2, 1fr); }
+            /* Updated to 3 columns on larger screens */
+            .grid-3-col { grid-template-columns: repeat(3, 1fr); }
+
+            /* Removed .about-grid styles */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Particle Background --><canvas id="particle-canvas"></canvas>
+
+    <!-- Header --><header class="sticky-header">
+        <nav class="container">
+            <!-- Logo/Brand Name (now an image) --><a href="#" class="logo-link">
+                <img src="rawfx-studios-logo.png" alt="RawFX Studios Logo" class="logo-image">
+            </a>
+
+            <!-- Mobile Menu Toggle Button --><button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Open navigation menu">
+                <ion-icon name="menu-outline" class="w-6 h-6" id="menu-icon-open"></ion-icon>
+                <ion-icon name="close-outline" class="w-6 h-6 hidden" id="menu-icon-close"></ion-icon>
             </button>
 
-            <div class="desktop-menu">
+            <!-- Desktop Menu --><div class="desktop-menu">
                 <a href="#services" class="nav-link">Services</a>
-                <a href="#portfolio" class="nav-link">Portfolio</a>
+                <a href="#portfolio" class="nav-link">Work</a>
                 <a href="#about" class="nav-link">About</a>
-                <a href="#contact" class="nav-button">
-                    Get in Touch
-                </a>
+                <a href="#contact" class="nav-button">Get in Touch</a>
+            </div>
+
+            <!-- Mobile Menu --><div id="mobile-menu" class="mobile-menu">
+                <a href="#services" class="mobile-nav-link">Services</a>
+                <a href="#portfolio" class="mobile-nav-link">Work</a>
+                <a href="#about" class="mobile-nav-link">About</a>
+                <a href="#contact" class="mobile-nav-link accent">Get in Touch</a>
             </div>
         </nav>
-        
-        <div id="mobile-menu" class="mobile-menu glass-card">
-            <a href="#services" class="mobile-nav-link">Services</a>
-            <a href="#portfolio" class="mobile-nav-link">Portfolio</a>
-            <a href="#about" class="mobile-nav-link">About</a>
-            <a href="#contact" class="mobile-nav-link accent">Get in Touch</a>
-        </div>
     </header>
 
     <main>
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    RawFX-Studios
-                </h1>
-                <p class="hero-subtitle">
-                    Powered by Atanu Debgharia
-                </p>
+        <!-- Hero Section --><section class="hero-section">
+            <div class="hero-content" id="hero-content">
+                <h1 class="hero-title">ATANU DEBGHARIA</h1>
+                <p class="hero-subtitle">VFX Artist & Post-Production Specialist<br>powered by RawFX-Studios</p>
                 <div class="hero-services-list">
-                    <span class="hero-service-tag">Colour Grading</span>
+                    <span class="hero-service-tag">VFX</span>
                     <span class="hero-service-tag">Motion Graphics</span>
-                    <span class="hero-service-tag">Video Edits</span>
-                    <span class="hero-service-tag">Photo Designs</span>
+                    <span class="hero-service-tag">Color Grading</span>
+                    <span class="hero-service-tag">Video Editing</span>
                 </div>
-                <a href="#portfolio" class="hero-button">
-                    View My Work
-                </a>
+                <a href="#contact" class="hero-button">Let's Collaborate</a>
             </div>
         </section>
 
-        <!-- Services Section -->
-        <section id="services" class="py-20 fade-in-section">
-            <div class="container">
-                <h2 class="section-title">
-                    My Editing Toolkit
-                </h2>
-                <div class="grid-3-col">
-                    <div class="glass-card service-card">
-                        <ion-icon name="color-palette-outline" class="service-icon"></ion-icon>
-                        <h3 class="card-title">Colour Grading</h3>
-                        <p class="card-text">Setting the perfect mood and tone for your videos and photos with cinematic colour.</p>
-                    </div>
-                    <div class="glass-card service-card">
-                        <ion-icon name="sparkles-outline" class="service-icon"></ion-icon>
-                        <h3 class="card-title">Motion Graphics</h3>
-                        <p class="card-text">Dynamic titles, lower thirds, and visual effects to make your content stand out.</p>
-                    </div>
-                    <div class="glass-card service-card">
-                        <ion-icon name="cut-outline" class="service-icon"></ion-icon>
-                        <h3 class="card-title">Video & Photo Editing</h3>
-                        <p class="card-text">From seamless cuts to complex composites, I craft your raw files into a final masterpiece.</p>
-                    </div>
+        <!-- Services Section --><section id="services" class="py-20 container fade-in-section">
+            <h2 class="section-title">What I Do</h2>
+            <div class="grid-3-col">
+                <!-- Service 1: VFX --><div class="glass-card service-card">
+                    <ion-icon name="sparkles-outline" class="service-icon"></ion-icon>
+                    <h3 class="card-title">Visual Effects (VFX)</h3>
+                    <p class="card-text">From concept to final shot, I create stunning visual effects that bring imagination to life. Compositing, motion tracking, and cleanups.</p>
                 </div>
-            </div>
-        </section>
-        
-        <!-- Portfolio Section -->
-        <section id="portfolio" class="py-20 fade-in-section">
-            <div class="container">
-                <h2 class="section-title">
-                    Polished Work
-                </h2>
-                <div class="grid-2-col">
-
-                    <!-- Portfolio Item 1: Before & After (PHOTO) -->
-                    <div class="glass-card portfolio-card">
-                        <div class="portfolio-image-container">
-                            <!-- This is your 'After' image -->
-                            <div class="portfolio-content after-content">
-                                <img src="project-1-after.jpg" alt="Color graded photo" class="portfolio-image">
-                            </div>
-                            <!-- This is your 'Before' image -->
-                            <div class="portfolio-content before-content hidden">
-                                <img src="project-1-before.jpg" alt="Raw footage" class="portfolio-image">
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3 class="card-title">Cinematic Colour Grade</h3>
-                            <p class="card-text">
-                                This project involved a complete colour transformation to create a moody, cinematic feel.
-                            </p>
-                            <button class="portfolio-toggle">
-                                Show Before
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Portfolio Item 2: VIDEO SHOWCASE -->
-                    <div class="glass-card portfolio-card">
-                        <div class="portfolio-image-container">
-                            <!-- This is your Video file -->
-                            <div class="portfolio-content after-content">
-                                <video class="portfolio-video" 
-                                       src="project-2-video.mp4" 
-                                       autoplay 
-                                       loop 
-                                       muted 
-                                       playsinline 
-                                       controls>
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <h3 class="card-title">Motion Graphics Reel</h3>
-                            <p class="card-text">
-                                A compilation of dynamic motion graphics created for various clients, all in one reel.
-                            </A>
-                            <!-- No "Before/After" button needed for a video reel -->
-                        </div>
-                    </div>
-
+                <!-- Service 2: Motion Graphics --><div class="glass-card service-card">
+                    <ion-icon name="film-outline" class="service-icon"></ion-icon>
+                    <h3 class="card-title">Motion Graphics</h3>
+                    <p class="card-text">Engaging title sequences, logo animations, and infographic videos that capture attention and tell your story dynamically.</p>
+                </div>
+                <!-- Service 3: Color Grading --><div class="glass-card service-card">
+                    <ion-icon name="color-palette-outline" class="service-icon"></ion-icon>
+                    <h3 class="card-title">Color Grading</h3>
+                    <p class="card-text">Setting the mood and tone of your footage with professional color correction and cinematic grading using DaVinci Resolve.</p>
                 </div>
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="py-20 fade-in-section">
-            <div class="container">
-                <div class="about-grid">
-                    <!-- This is your 'About Me' photo -->
-                    <div class="about-image-container">
-                        <img src="atanu-photo.jpg" alt="Portrait of Atanu Debgharia" class="about-image">
+        <!-- Portfolio Section --><section id="portfolio" class="py-20 container fade-in-section">
+            <h2 class="section-title">Polished Work</h2>
+            <!-- Changed from grid-2-col to grid-3-col --><div class="grid-3-col">
+                <!-- Portfolio Item 1: Image Slider --><div class="glass-card">
+                    <!-- Image Comparison Slider --><div class="image-comparison-slider" data-slider-id="slider-1">
+                        <span class="image-label label-after">After</span>
+                        <span class="image-label label-before">Before</span>
+                        
+                        <!-- After Image --><img src="https://placehold.co/1280x720/1a1a1a/404040?text=GRADING+-+AFTER" alt="After Color Grading" class="after-image">
+                        
+                        <!-- Before Image (Clipped) --><img src="https://placehold.co/1280x720/b0b0b0/c0c0c0?text=GRADING+-+BEFORE" alt="Before Color Grading" class="before-image">
+                        
+                        <div class="slider-handle"></div>
                     </div>
-                    <div class="about-text">
-                        <h2 class="section-title text-left">About the Artist</h2>
-                        <h3 class="about-name">Hi, I'm Atanu Debgharia.</h3>
-                        <p class="about-bio">
-                            I'm the creative force behind RawFX-Studios, with over <strong>3 years of professional experience</strong> turning raw concepts into polished, high-impact visuals.
-                        </p>
-                        <p class="about-bio-secondary">
-                            My passion is simple: I make things look good. Whether it's finding the perfect colour grade, executing a seamless edit, or building an engaging motion graphic, I am obsessed with the details that take content from "good" to "unforgettable."
-                        </p>
+                    <div class="card-content">
+                        <h3 class="card-title text-left">Color Grading</h3>
+                        <p class="card-text text-left">Before and after showcase of a cinematic color grade, transforming flat footage into a moody, professional shot.</p>
                     </div>
                 </div>
+
+                <!-- Portfolio Item 2: Video --><div class="glass-card">
+                    <div class="portfolio-image-container">
+                        <!-- Placeholder for a video --><div style="width:100%; height:100%; background:#000; display:flex; align-items:center; justify-content:center; position:absolute; top:0; left:0;">
+                            <ion-icon name="play-circle-outline" style="font-size: 5rem; color: var(--color-accent);"></ion-icon>
+                        </div>
+                         <!-- <video class="portfolio-video" controls poster="https://placehold.co/1280x720/1a1a1a/404040?text=Showreel+Poster">
+                            <source src="your-video-file.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video> --></div>
+                    <div class="card-content">
+                        <h3 class="card-title text-left">Motion Graphics</h3>
+                        <p class="card-text text-left">A collection of my best motion graphics and animation work, demonstrating skills in After Effects and dynamic storytelling.</p>
+                    </div>
+                </div>
+
+                <!-- NEW Portfolio Item 3: Video Edit --><div class="glass-card">
+                    <div class="portfolio-image-container">
+                        <!-- Placeholder for a video --><div style="width:100%; height:100%; background:#000; display:flex; align-items:center; justify-content:center; position:absolute; top:0; left:0;">
+                            <ion-icon name="cut-outline" style="font-size: 5rem; color: var(--color-accent);"></ion-icon>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title text-left">Video Edit</h3>
+                        <p class="card-text text-left">A short-form video edit, showcasing dynamic pacing, sound design, and storytelling for social media content.</p>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- Niche CTA Section -->
-        <section class="cta-section fade-in-section">
-            <div class="container text-center">
-                <h2 class="cta-title">
-                    Have a specific project in mind?
-                </h2>
-                <p class="cta-subtitle">
-                    I thrive on unique challenges.
-                </WELCOME>
-                <p class="cta-niche-box">
-                    DM FOR YOUR SPECIFIC NICHE
+        <!-- About Section --><section id="about" class="py-20 container fade-in-section">
+            
+            <!-- Section Title --><h2 class="section-title text-center">About Me</h2>
+
+            <!-- About Image (Moved Here) --><div class="about-image-container" style="margin-bottom: 3rem;">
+                <img src="https://placehold.co/600x600/1a1a1a/404040?text=Atanu+Debgharia" alt="A photo of Atanu Debgharia" class="about-image">
+            </div>
+
+            <!-- About Text Content (Centered) --><div class="about-content" style="max-width: 48rem; margin-left: auto; margin-right: auto; text-align: center;">
+                <p class="about-name">Hi, I'm Atanu Debgharia</p>
+                <p class="about-bio">
+                    I'm a passionate <strong>VFX Artist and Post-Production Generalist</strong> based in India. With 2+ years of hands-on experience, I specialize in bringing digital ideas to life, whether it's through mind-bending visual effects, clean motion graphics, or precise color grading that sets the perfect mood.
                 </p>
+                <p class="about-bio-secondary">
+                    My toolkit includes industry-standard software like Adobe After Effects, Premiere Pro, and DaVinci Resolve. I'm dedicated to delivering high-quality, polished work for every project I take on.
+                </p>
+                <a href="#contact" class="hero-button" style="opacity: 1; margin-top: 1.5rem;">Let's Talk</a>
+            </div>
+
+        </section>
+
+        <!-- CTA Section --><section class="cta-section text-center fade-in-section">
+            <h2 class="cta-title">My specialization?</h2>
+            <p class="cta-subtitle">Turning raw footage into a polished, cinematic experience.</p>
+            <div class="cta-niche-box">
+                POST-PRODUCTION
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="py-20 fade-in-section">
-            <div class="container text-center">
-                <h2 class="section-title">Let's Collaborate</h2>
-                <p class="contact-subtitle">
-                    Ready to start your project? Get in touch today.
-                </p>
-                
-                <div class="contact-buttons">
-                    <a href="https://wa.me/918509422062" target="_blank" class="contact-button whatsapp">
-                        <ion-icon name="logo-whatsapp"></ion-icon>
-                        WhatsApp Me
+        <!-- Contact Section --><section id="contact" class="py-20 container text-center fade-in-section">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="contact-subtitle">
+                Have a project in mind or just want to say hi? My inbox is always open.
+                Fill out the form below or send me an email.
+            </p>
+
+            <!-- Contact Form --><form id="contact-form" action="https://formspree.io/f/xldopzav" method="POST">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+                    <div class="form-group col-span-2">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" rows="5" class="form-textarea" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="submit-button" id="submit-button">Send Message</button>
+                <p id="form-status"></p>
+            </form>
+
+            <!-- Social Links --><div class="social-links-container">
+                <h3 class="social-links-title">Find me on other platforms</h3>
+                <div class="social-links-grid">
+                    <a href="https://www.instagram.com/atanu_debgharia?igsh=NzFocnFiMG1kc2Vj" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+                        <ion-icon name="logo-instagram"></ion-icon>
                     </a>
-                    <a href="tel:+918509422062" class="contact-button call">
-                        <ion-icon name="call-outline"></ion-icon>
-                        Call (+91) 85094 22062
+                    <a href="https://www.facebook.com/atanu.debgharia.3?mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
+                        <ion-icon name="logo-facebook"></ion-icon>
+                    </a>
+                    <a href="https://www.linkedin.com/in/atanu-debgharia-003837260?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
+                        <ion-icon name="logo-linkedin"></ion-icon>
                     </a>
                 </div>
-
-                <div class="social-links-container">
-                    <p class="social-links-title">Find me on other platforms:</p>
-                    <div class="social-links-grid">
-                        <a href="https://www.instagram.com/atanu_debgharia" target="_blank" class="social-link" title="Instagram">
-                            <span class="sr-only">Instagram</span>
-                            <ion-icon name="logo-instagram"></ion-icon>
-                        </a>
-                        <a href="https://www.linkedin.com/in/atanu-debgharia-003837260" target="_blank" class="social-link" title="LinkedIn">
-                            <span class="sr-only">LinkedIn</span>
-                            <ion-icon name="logo-linkedin"></ion-icon>
-                        </a>
-                        <a href="https://www.facebook.com/share/1Jb9sKHKQm/" target="_blank" class="social-link" title="Facebook">
-                            <span class="sr-only">Facebook</span>
-                            <ion-icon name="logo-facebook"></ion-icon>
-                        </a>
-                    </div>
-                </div>
             </div>
+
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container text-center footer-content">
-            <p class="footer-brand">Powered by RawFX-Studios</p>
-            <p class="footer-copy">&copy; 2025 Atanu Debgharia. All rights reserved.</p>
-        </div>
+    <!-- Footer --><footer class="footer">
+        <p class="footer-brand">Powered by RawFX-Studios</p>
+        <p class="footer-copyright">© 2025 Atanu Debgharia. All rights reserved</p>
     </footer>
 
-    <!-- Embedded JavaScript -->
-    <script>
+    <!-- Scroll to Top Button --><button id="scroll-to-top" aria-label="Scroll to top">
+        <ion-icon name="arrow-up-outline"></ion-icon>
+    </button>
+
+
+    <!-- JavaScript --><script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- Particle Background ---
-            const canvas = document.getElementById('particle-canvas');
-            if (canvas) {
-                const ctx = canvas.getContext('2d');
-                let particles = [];
-                const particleCount = 100;
-                const particleColor = getComputedStyle(document.documentElement).getPropertyValue('--color-particle').trim() || 'rgba(224, 232, 255, 0.7)';
 
-                const setCanvasSize = () => {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                };
+            // --- 1. Mobile Menu Toggle ---
+            const menuToggle = document.getElementById('mobile-menu-toggle');
+            const menu = document.getElementById('mobile-menu');
+            const iconOpen = document.getElementById('menu-icon-open');
+            const iconClose = document.getElementById('menu-icon-close');
+            const navLinks = menu.querySelectorAll('a');
 
-                class Particle {
-                    constructor() {
-                        this.x = Math.random() * canvas.width;
-                        this.y = Math.random() * canvas.height;
-                        this.radius = Math.random() * 1.5 + 0.5;
-                        this.vx = (Math.random() - 0.5) * 0.5; 
-                        this.vy = (Math.random() - 0.5) * 0.5; 
-                    }
-                    draw() {
-                        ctx.beginPath();
-                        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                        ctx.fillStyle = particleColor;
-                        ctx.fill();
-                    }
-                    update() {
-                        this.x += this.vx;
-                        this.y += this.vy;
-                        if (this.x < 0) this.x = canvas.width;
-                        if (this.x > canvas.width) this.x = 0;
-                        if (this.y < 0) this.y = canvas.height;
-                        if (this.y > canvas.height) this.y = 0;
-                        this.draw();
-                    }
-                }
-
-                const initParticles = () => {
-                    particles = [];
-                    for (let i = 0; i < particleCount; i++) {
-                        particles.push(new Particle());
-                    }
-                };
-
-                const animateParticles = () => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    particles.forEach(p => p.update());
-                    requestAnimationFrame(animateParticles);
-                };
-
-                window.addEventListener('resize', () => {
-                    setCanvasSize();
-                    initParticles();
+            if (menuToggle && menu && iconOpen && iconClose) {
+                menuToggle.addEventListener('click', () => {
+                    menu.classList.toggle('active');
+                    iconOpen.classList.toggle('hidden');
+                    iconClose.classList.toggle('hidden');
                 });
 
-                setCanvasSize();
-                initParticles();
-                animateParticles();
-            }
-
-            // --- Mobile Menu Toggle ---
-            const menuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            
-            if (menuButton && mobileMenu) {
-                menuButton.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
-                mobileMenu.querySelectorAll('a').forEach(link => {
+                // Close menu when a link is clicked
+                navLinks.forEach(link => {
                     link.addEventListener('click', () => {
-                        mobileMenu.classList.add('hidden');
+                        menu.classList.remove('active');
+                        iconOpen.classList.remove('hidden');
+                        iconClose.classList.add('hidden');
                     });
                 });
             }
 
-            // --- Portfolio 'Before/After' Toggle ---
-            const toggleButtons = document.querySelectorAll('.portfolio-toggle');
-            
-            toggleButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const card = button.closest('.portfolio-card');
-                    if (!card) return;
-                    const beforeContent = card.querySelector('.before-content');
-                    const afterContent = card.querySelector('.after-content');
+            // --- 2. Hero Content "Click" Effect ---
+            const heroContent = document.getElementById('hero-content');
+            if (heroContent) {
+                heroContent.addEventListener('mousedown', () => {
+                    heroContent.classList.add('hero-clicked');
+                });
+                heroContent.addEventListener('animationend', () => {
+                    heroContent.classList.remove('hero-clicked');
+                });
+            }
 
-                    if (beforeContent && afterContent) {
-                        beforeContent.classList.toggle('hidden');
-                        afterContent.classList.toggle('hidden');
-                        if (beforeContent.classList.contains('hidden')) {
-                            button.textContent = 'Show Before';
-                        } else {
-                            button.textContent = 'Show After';
+            // --- 3. Image Comparison Slider ---
+            function initImageSliders() {
+                document.querySelectorAll('.image-comparison-slider').forEach(slider => {
+                    const handle = slider.querySelector('.slider-handle');
+                    const beforeImage = slider.querySelector('.before-image');
+                    let isDragging = false;
+
+                    const startDrag = (e) => {
+                        isDragging = true;
+                        slider.classList.add('dragging');
+                        // Prevent default behavior (like text selection)
+                        if (e.preventDefault) e.preventDefault();
+                    };
+
+                    const stopDrag = () => {
+                        isDragging = false;
+                        slider.classList.remove('dragging');
+                    };
+
+                    const onDrag = (e) => {
+                        if (!isDragging) return;
+                        
+                        // Prevent default behavior (like scrolling on touch)
+                        if (e.preventDefault) e.preventDefault();
+
+                        // Get x position from either mouse or touch
+                        const x = e.clientX || (e.touches && e.touches[0].clientX);
+                        if (x === undefined) return; // Exit if no coordinates
+                        
+                        const rect = slider.getBoundingClientRect();
+                        let offsetX = x - rect.left;
+                        let percentage = (offsetX / rect.width) * 100;
+
+                        // Clamp percentage between 0 and 100
+                        if (percentage < 0) percentage = 0;
+                        if (percentage > 100) percentage = 100;
+
+                        handle.style.left = `${percentage}%`;
+                        beforeImage.style.width = `${percentage}%`;
+                    };
+
+                    // Mouse events
+                    handle.addEventListener('mousedown', startDrag);
+                    document.addEventListener('mouseup', stopDrag);
+                    document.addEventListener('mousemove', onDrag);
+
+                    // Touch events
+                    handle.addEventListener('touchstart', startDrag, { passive: false });
+                    document.addEventListener('touchend', stopDrag);
+                    document.addEventListener('touchmove', onDrag, { passive: false });
+                });
+            }
+            initImageSliders();
+
+            // --- 4. Particle Background ---
+            const canvas = document.getElementById('particle-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let particles = [];
+                
+                // Particle density
+                const starDensity = (window.innerWidth * window.innerHeight) / 7000;
+                const nebulaDensity = 30; // Count for large nebula clouds
+                
+                // Star particle settings
+                const maxStarRadius = 3.5;
+                const minStarRadius = 1.5;
+
+                function hexToRgb(hex) {
+                    let r = 0, g = 0, b = 0;
+                    if (hex.startsWith('#')) {
+                        // Hex
+                        if (hex.length == 4) {
+                            r = "0x" + hex[1] + hex[1];
+                            g = "0x" + hex[2] + hex[2];
+                            b = "0x" + hex[3] + hex[3];
+                        } else if (hex.length == 7) {
+                            r = "0x" + hex[1] + hex[2];
+                            g = "0x" + hex[3] + hex[4];
+                            b = "0x" + hex[5] + hex[6];
+                        }
+                    } else if (hex.startsWith('rgba')) {
+                        // rgba
+                        const parts = hex.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+                        if (parts) {
+                            return `${parts[1]}, ${parts[2]}, ${parts[3]}`;
                         }
                     }
+                    return `${+r}, ${+g}, ${+b}`;
+                }
+                
+                // Get the RGB color string
+                const particleRgbColor = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--color-particle').trim());
+
+
+                class Particle {
+                    // Added 'type' to constructor
+                    constructor(x, y, radius, dx, dy, type = 'star') {
+                        this.x = x;
+                        this.y = y;
+                        this.radius = radius;
+                        this.dx = dx;
+                        this.dy = dy;
+                        this.baseRadius = radius;
+                        this.type = type; // 'star' or 'nebula'
+                    }
+
+                    draw() {
+                        ctx.beginPath();
+                        let gradient;
+                        
+                        if (this.type === 'star') {
+                            // Bright, feathered star
+                            gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+                            gradient.addColorStop(0, `rgba(${particleRgbColor}, 1.0)`);
+                            gradient.addColorStop(1, `rgba(${particleRgbColor}, 0)`);
+                        } else {
+                            // Large, faint nebula cloud
+                            gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+                            gradient.addColorStop(0, `rgba(${particleRgbColor}, 0.05)`); // Very faint
+                            gradient.addColorStop(1, `rgba(${particleRgbColor}, 0)`);
+                        }
+                        
+                        ctx.fillStyle = gradient;
+                        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.closePath();
+                    }
+
+                    update() {
+                        // Wall collision (wrap around)
+                        if (this.x > canvas.width + this.radius) {
+                            this.x = -this.radius;
+                        } else if (this.x < -this.radius) {
+                            this.x = canvas.width + this.radius;
+                        }
+                        
+                        if (this.y > canvas.height + this.radius) {
+                            this.y = -this.radius;
+                        } else if (this.y < -this.radius) {
+                            this.y = canvas.height + this.radius;
+                        }
+
+                        this.x += this.dx;
+                        this.y += this.dy;
+
+                        this.draw();
+                    }
+                }
+
+                function initParticles() {
+                    particles = [];
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    
+                    const newStarCount = Math.floor((canvas.width * canvas.height) / 7000); // Recalculate stars
+                    const newNebulaCount = 30; // Keep nebula count constant
+
+                    // 1. Create Nebula Particles FIRST (so they are drawn behind)
+                    for (let i = 0; i < newNebulaCount; i++) {
+                        const radius = Math.random() * 100 + 50; // 50px to 150px
+                        const x = Math.random() * canvas.width;
+                        const y = Math.random() * canvas.height;
+                        const dx = (Math.random() - 0.5) * 0.05; // Very slow
+                        const dy = (Math.random() - 0.5) * 0.05;
+                        particles.push(new Particle(x, y, radius, dx, dy, 'nebula'));
+                    }
+
+                    // 2. Create Star Particles SECOND (so they are drawn on top)
+                    for (let i = 0; i < newStarCount; i++) {
+                        const radius = Math.random() * (maxStarRadius - minStarRadius) + minStarRadius;
+                        const x = Math.random() * canvas.width;
+                        const y = Math.random() * canvas.height;
+                        const dx = (Math.random() - 0.5) * 0.3; // Faster than nebula
+                        const dy = (Math.random() - 0.5) * 0.3;
+                        particles.push(new Particle(x, y, radius, dx, dy, 'star'));
+                    }
+                }
+
+                function animateParticles() {
+                    requestAnimationFrame(animateParticles);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // Draw all particles (nebula will be drawn first, then stars)
+                    for (let i = 0; i < particles.length; i++) {
+                        particles[i].update();
+                    }
+                }
+
+                initParticles();
+                animateParticles();
+
+                window.addEventListener('resize', () => {
+                    // Use a timeout to avoid spamming resizes
+                    clearTimeout(window.resizeTimer);
+                    window.resizeTimer = setTimeout(initParticles, 100);
                 });
-            });
+            }
 
-            // --- Scroll-in Animations (for sections) ---
-            const sections = document.querySelectorAll('.fade-in-section');
-            
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target); 
+            // --- 5. Scroll to Top Button ---
+            const scrollToTopBtn = document.getElementById('scroll-to-top');
+            if (scrollToTopBtn) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 300) {
+                        scrollToTopBtn.classList.add('visible');
+                    } else {
+                        scrollToTopBtn.classList.remove('visible');
                     }
                 });
-            }, observerOptions);
 
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-            
+                scrollToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            // --- 6. Fade-in on Scroll ---
+            const sections = document.querySelectorAll('.fade-in-section');
+            if (sections.length > 0) {
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1
+                });
+
+                sections.forEach(section => {
+                    observer.observe(section);
+                });
+            }
+
+            // --- 7. Formspree Contact Form ---
+            const form = document.getElementById("contact-form");
+            const status = document.getElementById("form-status");
+            const submitButton = document.getElementById("submit-button");
+
+            if (form) {
+                form.addEventListener("submit", async function(e) {
+                    e.preventDefault();
+                    
+                    const data = new FormData(e.target);
+                    const originalButtonText = submitButton.innerHTML;
+                    
+                    submitButton.innerHTML = `Sending... <ion-icon name="paper-plane-outline" style="margin-left: 0.5rem; vertical-align: middle;"></ion-icon>`;
+                    submitButton.disabled = true;
+
+                    try {
+                        const response = await fetch(e.target.action, {
+                            method: 'POST',
+                            body: data,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+
+                        if (response.ok) {
+                            status.innerHTML = "Thanks for your message! I'll get back to you soon.";
+                            status.className = 'success';
+                            form.reset();
+                        } else {
+                            // Try to get error message from Formspree
+                            const responseData = await response.json();
+                            if (Object.hasOwn(responseData, 'errors')) {
+                                status.innerHTML = responseData["errors"].map(error => error["message"]).join(", ");
+                            } else {
+                                status.innerHTML = "Oops! There was a problem submitting your form.";
+                            }
+                            status.className = 'error';
+                        }
+                    } catch (error) {
+                        status.innerHTML = "Oops! There was a problem and your message couldn't be sent.";
+                        status.className = 'error';
+                    } finally {
+                        // Restore button
+                        submitButton.innerHTML = originalButtonText;
+                        submitButton.disabled = false;
+                        
+                        // Clear status message after 5 seconds
+                        setTimeout(() => {
+                            status.innerHTML = '';
+                            status.className = '';
+                        }, 5000);
+                    }
+                });
+            }
+
         });
     </script>
 </body>
 </html>
+
 
 
