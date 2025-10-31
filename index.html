@@ -14,91 +14,94 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
+    <!-- Embedded CSS -->
     <style>
+        /* --- Root Variables: NEW Black & Diamond Theme --- */
         :root {
             --font-heading: 'Poppins', sans-serif;
             --font-body: 'Inter', sans-serif;
 
+            /* Deep black background */
             --color-bg: #0a0a0a;
+            
+            /* Bright "Diamond" white and grays */
             --color-text-primary: #f0f0f0;
             --color-text-secondary: #a0a0a0;
             --color-text-muted: #666666;
+            
+            /* Main "Diamond" accent */
             --color-accent: #ffffff;
             --color-accent-hover: #e0e0e0;
-            --color-glass-bg: rgba(26, 26, 26, 0.7);
+            
+            /* Glass/Card colors */
+            --color-glass-bg: rgba(26, 26, 26, 0.7); /* Darker glass */
             --color-glass-border: rgba(100, 100, 100, 0.5);
-            --color-particle: rgba(224, 232, 255, 0.7);
+            
+            /* Particle color */
+            --color-particle: rgba(224, 232, 255, 0.7); /* Light blue/white 'dust' */
         }
 
         /* --- Animations --- */
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-30px);}
-            to   { opacity: 1; transform: translateY(0);}
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px);}
-            to   { opacity: 1; transform: translateY(0);}
-        }
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.95);}
-            to   { opacity: 1; transform: scale(1);}
-        }
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.5);}
-            50%      { box-shadow: 0 0 20px 5px rgba(255,255,255,0.7);}
-        }
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%;}
-            100% { background-position: 100% 50%;}
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .animated {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s, transform 0.8s;
+        /* --- Responsive Reset & Base --- */
+        html {
+            box-sizing: border-box;
+            font-size: 16px;
         }
-        .animated.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-            animation: fadeInUp 1s cubic-bezier(.5,1.5,.5,1) forwards;
+        *, *:before, *:after {
+            box-sizing: inherit;
         }
-        .card-animated {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 0.8s, transform 0.8s;
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
+            font-family: var(--font-body);
+            margin: 0;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
-        .card-animated.is-visible {
-            opacity: 1;
-            transform: scale(1);
-            animation: zoomIn 0.7s cubic-bezier(.5,1.5,.5,1) forwards;
+        
+        /* --- NEW: Particle Canvas --- */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Behind all content */
         }
-        img.animated-img {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 1s, transform 1s;
-        }
-        img.animated-img.is-visible {
-            opacity: 1;
-            transform: scale(1);
-            animation: zoomIn 1s cubic-bezier(.5,1.5,.5,1) forwards;
-        }
-        .hero-button, .nav-button, .portfolio-toggle, .contact-button {
-            transition: all 0.3s ease, transform 0.1s ease;
-        }
-        .hero-button:hover, .nav-button:hover, .portfolio-toggle:hover, .contact-button:hover {
-            animation: pulse 0.8s;
-            box-shadow: 0 0 20px 5px rgba(255,255,255,0.4);
-        }
-        .counter {
-            font-size: 2rem;
-            font-weight: bold;
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-heading);
+            font-weight: 700;
             color: var(--color-accent);
-            margin: 1rem 0;
+            margin-top: 0;
+            margin-bottom: 0.5em;
+            line-height: 1.2;
         }
-        .hero-section {
-            background: linear-gradient(270deg, #0a0a0a, #24243e, #302b63, #0f2027);
-            background-size: 600% 600%;
-            animation: gradientMove 16s ease infinite alternate;
+
+        img, picture, video, canvas, svg {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        ::selection {
+            background-color: var(--color-accent);
+            color: #000000;
         }
 
         /* --- Utility Classes --- */
@@ -113,9 +116,26 @@
             padding-top: 5rem;
             padding-bottom: 5rem;
         }
-        .text-center { text-align: center; }
-        .text-left { text-align: left; }
-        .hidden { display: none !important; }
+        .text-center {
+            text-align: center;
+        }
+        .text-left {
+            text-align: left;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
 
         /* --- Header & Navigation --- */
         .sticky-header {
@@ -123,11 +143,13 @@
             top: 0;
             z-index: 50;
             width: 100%;
+            /* Updated to black-based glass */
             background-color: rgba(10, 10, 10, 0.7);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--color-glass-border);
         }
+
         .sticky-header nav.container {
             display: flex;
             justify-content: space-between;
@@ -135,12 +157,14 @@
             padding-top: 1rem;
             padding-bottom: 1rem;
         }
+
         .logo-text {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--color-accent);
             text-decoration: none;
         }
+
         .mobile-menu-toggle {
             display: block;
             background: none;
@@ -151,6 +175,7 @@
         }
         .mobile-menu-toggle .w-6 { width: 1.5rem; }
         .mobile-menu-toggle .h-6 { height: 1.5rem; }
+
         .desktop-menu {
             display: none;
             gap: 1.5rem;
@@ -161,13 +186,16 @@
             text-decoration: none;
             transition: color 0.3s ease;
         }
-        .nav-link:hover { color: var(--color-accent);}
+        .nav-link:hover {
+            color: var(--color-accent);
+        }
+
         .nav-button {
             background-color: var(--color-accent);
-            color: #000000;
+            color: #000000; /* Black text on white button */
             padding: 0.5rem 1.25rem;
             border-radius: 9999px;
-            font-weight: 700;
+            font-weight: 700; /* Bolder */
             text-decoration: none;
             transition: all 0.3s ease;
         }
@@ -175,6 +203,7 @@
             background-color: var(--color-accent-hover);
             transform: scale(1.05);
         }
+
         .mobile-menu {
             display: none;
             margin: 0 1rem 1rem 1rem;
@@ -189,12 +218,10 @@
         .mobile-nav-link:hover {
             background-color: rgba(30, 41, 59, 0.5);
         }
-        .mobile-nav-link.accent { color: var(--color-accent);}
-        @media (min-width: 768px) {
-            .mobile-menu-toggle { display: none; }
-            .desktop-menu { display: flex; }
-            .mobile-menu { display: none !important;}
+        .mobile-nav-link.accent {
+            color: var(--color-accent);
         }
+
         /* --- Hero Section --- */
         .hero-section {
             min-height: 90vh;
@@ -206,8 +233,15 @@
             z-index: 1;
             position: relative;
         }
-        .hero-content { max-width: 56rem; margin: 0 auto;}
-        .hero-content > * { opacity: 0;}
+        .hero-content {
+            max-width: 56rem;
+            margin: 0 auto;
+        }
+        
+        /* --- Hero Slide-Down Animation --- */
+        .hero-content > * {
+            opacity: 0; /* Hidden by default */
+        }
         .hero-title {
             font-weight: 800;
             color: var(--color-accent);
@@ -226,36 +260,35 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 0.75rem;
+            animation: slideDown 0.8s ease-out 0.5s forwards;
         }
         .hero-service-tag {
-            background-color: rgba(255,255,255,0.1);
-            color: #fff;
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            font-size: 0.875rem;
             padding: 0.5rem 1rem;
             border-radius: 9999px;
-            font-weight: 500;
-            font-size: 1rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.16);
-            margin: 0.25rem;
         }
         .hero-button {
+            margin-top: 3rem;
             display: inline-block;
-            margin-top: 2.5rem;
-            padding: 0.7rem 2.2rem;
-            font-size: 1.25rem;
+            background-color: var(--color-accent);
+            color: #000000;
+            font-size: 1.125rem;
             font-weight: 700;
-            background: linear-gradient(90deg,#fff,#e0e0e0);
-            color: #222;
+            padding: 0.75rem 2.5rem;
             border-radius: 9999px;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 32px rgba(255,255,255,0.12), 0 2px 8px rgba(0,0,0,0.12);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            text-decoration: none;
+            transition: all 0.3s ease;
             animation: slideDown 0.8s ease-out 0.7s forwards;
         }
         .hero-button:hover {
             background-color: var(--color-accent-hover);
-            box-shadow: 0 10px 15px -3px rgba(255,255,255,0.3), 0 4px 6px -4px rgba(255,255,255,0.3);
+            box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.3), 0 4px 6px -4px rgba(255, 255, 255, 0.3);
             transform: scale(1.05);
         }
+
         /* --- General Section & Card Styles --- */
         .section-title {
             font-weight: 700;
@@ -269,26 +302,54 @@
             grid-template-columns: repeat(1, 1fr);
             gap: 2rem;
         }
-        @media (min-width: 640px) {
-            .hero-title { font-size: clamp(3.25rem, 8vw, 6rem);}
-            .section-title { font-size: clamp(2rem, 7vw, 3.75rem);}
-            .cta-niche-box { font-size: clamp(1.75rem, 8vw, 3rem);}
-            .contact-buttons { flex-direction: row;}
-            .contact-button { width: auto;}
-            .grid-3-col { grid-template-columns: repeat(3, 1fr);}
-            .grid-2-col { grid-template-columns: repeat(2, 1fr);}
-            .about-grid { grid-template-columns: 1fr 2fr;}
-        }
         .glass-card {
             background-color: var(--color-glass-bg);
             backdrop-filter: blur(10px);
-            border-radius: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
-            text-decoration: none;
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--color-glass-border);
             transition: all 0.3s ease;
-            width: 100%;
+            border-radius: 0.5rem;
+            overflow: hidden;
         }
-        .card-content { padding: 1.5rem;}
+        .glass-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-5px);
+        }
+
+        /* Service Card Specifics */
+        .service-card {
+            padding: 2rem;
+            text-align: center;
+        }
+        .service-icon {
+            font-size: 3rem;
+            color: var(--color-accent);
+            margin: 0 auto 1rem auto;
+        }
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+        .card-text {
+            color: var(--color-text-secondary);
+        }
+
+        /* Portfolio Card Specifics */
+        .portfolio-image-container {
+            position: relative;
+        }
+        .portfolio-image, .portfolio-video {
+            width: 100%;
+            height: 18rem; /* 72 */
+            object-fit: cover;
+            display: block;
+            background-color: #000; /* Black bg for video loading */
+        }
+        .card-content {
+            padding: 1.5rem;
+        }
         .portfolio-toggle {
             width: 100%;
             background-color: #333;
@@ -306,48 +367,241 @@
             color: #000;
             border-color: var(--color-accent);
         }
+
+        /* --- About Section --- */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr;
             align-items: center;
             gap: 3rem;
         }
-        .about-image-container { max-width: 400px; }
+        .about-image-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
         .about-image {
+            border-radius: 0.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             width: 100%;
             height: auto;
-            border-radius: 1rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+            object-fit: cover;
+            border: 4px solid var(--color-accent);
         }
-        .about-text {
-            color: var(--color-text-primary);
-            font-size: 1.1rem;
+        .about-name {
+            font-size: 1.5rem;
+            color: var(--color-accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .about-bio, .about-bio-secondary {
+            font-size: 1.125rem;
             line-height: 1.7;
+            color: var(--color-text-primary);
+            margin-bottom: 1rem;
         }
-        .footer {
-            background: rgba(10,10,10,0.97);
+        .about-bio-secondary {
             color: var(--color-text-secondary);
-            padding: 3rem 0 2rem 0;
-            border-top: 1px solid var(--color-glass-border);
         }
-        .footer-content {
+        .about-bio strong {
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+
+        /* --- Niche CTA Section --- */
+        .cta-section {
+            padding: 5rem 1.5rem;
+            /* Updated to a monochrome 'diamond' gradient */
+            background-image: linear-gradient(to right, #333, #111);
+            border-top: 1px solid var(--color-glass-border);
+            border-bottom: 1px solid var(--color-glass-border);
+        }
+        .cta-title {
+            font-weight: 800;
+            color: var(--color-accent);
+            line-height: 1.2;
+            font-size: clamp(1.75rem, 6vw, 2.25rem);
+        }
+        .cta-subtitle {
+            margin-top: 1rem;
+            font-size: 1.25rem;
+            color: var(--color-text-secondary);
+        }
+        .cta-niche-box {
+            margin-top: 1.5rem;
+            font-weight: 800;
+            color: var(--color-accent);
+            border: 2px solid var(--color-accent);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+            font-size: clamp(1.75rem, 8vw, 2.5rem);
+        }
+
+        /* --- Contact Section --- */
+        .contact-subtitle {
+            font-size: 1.125rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 3rem;
+            max-width: 36rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .contact-buttons {
             display: flex;
             flex-direction: column;
-            gap: 0.2rem;
+            justify-content: center;
+            gap: 1.5rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .contact-button {
+            display: inline-flex;
             align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+            font-weight: 700;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .contact-button ion-icon {
+            margin-right: 0.5rem;
+            font-size: 1.25rem;
+        }
+        
+        /* Themed contact buttons */
+        .contact-button.whatsapp {
+            background-color: transparent;
+            color: #25D366;
+            border: 2px solid #25D366;
+        }
+        .contact-button.whatsapp:hover {
+            background-color: #25D366;
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+        .contact-button.call {
+            background-color: var(--color-accent);
+            color: #000;
+            border: 2px solid var(--color-accent);
+        }
+        .contact-button.call:hover {
+            background-color: var(--color-accent-hover);
+            border-color: var(--color-accent-hover);
+            transform: scale(1.05);
+        }
+
+        /* Social Links */
+        .social-links-container {
+            margin-top: 4rem;
+        }
+        .social-links-title {
+            color: var(--color-text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        .social-links-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .social-link {
+            color: var(--color-text-muted);
+            transition: all 0.3s ease;
+        }
+        .social-link:hover {
+            color: var(--color-accent);
+            transform: scale(1.1);
+        }
+        .social-link ion-icon {
+            font-size: 2.25rem;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            border-top: 1px solid var(--color-glass-border);
+            padding: 2rem 0;
+        }
+        .footer-content {
+            color: var(--color-text-muted);
         }
         .footer-brand {
             font-weight: 700;
-            font-size: 1.15rem;
-            margin-bottom: 0.5rem;
+            color: var(--color-text-primary);
+            margin: 0;
         }
         .footer-copy {
             font-size: 0.875rem;
             margin-top: 0.25rem;
         }
+
+        /* --- Animations --- */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Button Click Animation */
+        .nav-button, .hero-button, .portfolio-toggle, .contact-button {
+            transition: all 0.3s ease, transform 0.1s ease;
+        }
+        .nav-button:active, .hero-button:active, .portfolio-toggle:active, .contact-button:active {
+            transform: scale(0.95);
+            filter: brightness(0.9);
+        }
+
+        /* --- Media Queries (Responsive Design) --- */
+        @media (min-width: 640px) {
+            .hero-title {
+                font-size: clamp(3.25rem, 8vw, 6rem);
+            }
+            .section-title {
+                font-size: clamp(2rem, 7vw, 3.75rem);
+            }
+            .cta-niche-box {
+                font-size: clamp(1.75rem, 8vw, 3rem);
+            }
+            .contact-buttons {
+                flex-direction: row;
+            }
+            .contact-button {
+                width: auto;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+            .desktop-menu {
+                display: flex;
+            }
+            .mobile-menu {
+                display: none !important;
+            }
+            .grid-3-col {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .grid-2-col {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .about-grid {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
     </style>
+
 </head>
 <body class="antialiased">
+    
     <!-- Particle Canvas -->
     <canvas id="particle-canvas"></canvas>
 
@@ -355,19 +609,24 @@
     <header class="sticky-header">
         <nav class="container">
             <a href="#" class="logo-text">Atanu Debgharia</a>
+            
             <button id="mobile-menu-button" class="mobile-menu-toggle">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
             </button>
+
             <div class="desktop-menu">
                 <a href="#services" class="nav-link">Services</a>
                 <a href="#portfolio" class="nav-link">Portfolio</a>
                 <a href="#about" class="nav-link">About</a>
-                <a href="#contact" class="nav-button">Get in Touch</a>
+                <a href="#contact" class="nav-button">
+                    Get in Touch
+                </a>
             </div>
         </nav>
-        <div id="mobile-menu" class="mobile-menu glass-card hidden">
+        
+        <div id="mobile-menu" class="mobile-menu glass-card">
             <a href="#services" class="mobile-nav-link">Services</a>
             <a href="#portfolio" class="mobile-nav-link">Portfolio</a>
             <a href="#about" class="mobile-nav-link">About</a>
@@ -377,106 +636,190 @@
 
     <main>
         <!-- Hero Section -->
-        <section class="hero-section animated">
+        <section class="hero-section">
             <div class="hero-content">
-                <h1 class="hero-title">RawFX-Studios</h1>
-                <p class="hero-subtitle">Powered by Atanu Debgharia</p>
+                <h1 class="hero-title">
+                    RawFX-Studios
+                </h1>
+                <p class="hero-subtitle">
+                    Powered by Atanu Debgharia
+                </p>
                 <div class="hero-services-list">
                     <span class="hero-service-tag">Colour Grading</span>
                     <span class="hero-service-tag">Motion Graphics</span>
                     <span class="hero-service-tag">Video Edits</span>
                     <span class="hero-service-tag">Photo Designs</span>
                 </div>
-                <a href="#portfolio" class="hero-button">View My Work</a>
-                <div class="counter" id="project-counter" data-target="100">0</div>
-                <span style="color:#a0a0a0;">Projects Completed</span>
+                <a href="#portfolio" class="hero-button">
+                    View My Work
+                </a>
             </div>
         </section>
 
-        <!-- Services Section: animated entrance -->
-        <section id="services" class="py-20 fade-in-section animated">
+        <!-- Services Section -->
+        <section id="services" class="py-20 fade-in-section">
             <div class="container">
-                <h2 class="section-title">My Editing Toolkit</h2>
+                <h2 class="section-title">
+                    My Editing Toolkit
+                </h2>
                 <div class="grid-3-col">
-                    <div class="glass-card service-card card-animated">
+                    <div class="glass-card service-card">
                         <ion-icon name="color-palette-outline" class="service-icon"></ion-icon>
                         <h3 class="card-title">Colour Grading</h3>
                         <p class="card-text">Setting the perfect mood and tone for your videos and photos with cinematic colour.</p>
-                        <img src="service-1.jpg" class="animated-img" alt="Colour Grading">
                     </div>
-                    <div class="glass-card service-card card-animated">
+                    <div class="glass-card service-card">
                         <ion-icon name="sparkles-outline" class="service-icon"></ion-icon>
                         <h3 class="card-title">Motion Graphics</h3>
                         <p class="card-text">Dynamic titles, lower thirds, and visual effects to make your content stand out.</p>
-                        <img src="service-2.jpg" class="animated-img" alt="Motion Graphics">
                     </div>
-                    <div class="glass-card service-card card-animated">
+                    <div class="glass-card service-card">
                         <ion-icon name="cut-outline" class="service-icon"></ion-icon>
                         <h3 class="card-title">Video & Photo Editing</h3>
                         <p class="card-text">From seamless cuts to complex composites, I craft your raw files into a final masterpiece.</p>
-                        <img src="service-3.jpg" class="animated-img" alt="Video & Photo Editing">
                     </div>
                 </div>
             </div>
         </section>
         
         <!-- Portfolio Section -->
-        <section id="portfolio" class="py-20 fade-in-section animated">
+        <section id="portfolio" class="py-20 fade-in-section">
             <div class="container">
-                <h2 class="section-title">Polished Work</h2>
+                <h2 class="section-title">
+                    Polished Work
+                </h2>
                 <div class="grid-2-col">
+
                     <!-- Portfolio Item 1: Before & After (PHOTO) -->
-                    <div class="glass-card portfolio-card card-animated">
+                    <div class="glass-card portfolio-card">
                         <div class="portfolio-image-container">
+                            <!-- This is your 'After' image -->
                             <div class="portfolio-content after-content">
-                                <img src="project-1-after.jpg" alt="Color graded photo" class="portfolio-image animated-img">
+                                <img src="project-1-after.jpg" alt="Color graded photo" class="portfolio-image">
                             </div>
+                            <!-- This is your 'Before' image -->
                             <div class="portfolio-content before-content hidden">
-                                <img src="project-1-before.jpg" alt="Raw footage" class="portfolio-image animated-img">
+                                <img src="project-1-before.jpg" alt="Raw footage" class="portfolio-image">
                             </div>
                         </div>
                         <div class="card-content">
                             <h3 class="card-title">Cinematic Colour Grade</h3>
-                            <p class="card-text">This project involved a complete colour transformation to create a moody, cinematic feel.</p>
-                            <button class="portfolio-toggle">Show Before</button>
+                            <p class="card-text">
+                                This project involved a complete colour transformation to create a moody, cinematic feel.
+                            </p>
+                            <button class="portfolio-toggle">
+                                Show Before
+                            </button>
                         </div>
                     </div>
+
                     <!-- Portfolio Item 2: VIDEO SHOWCASE -->
-                    <div class="glass-card portfolio-card card-animated">
+                    <div class="glass-card portfolio-card">
                         <div class="portfolio-image-container">
+                            <!-- This is your Video file -->
                             <div class="portfolio-content after-content">
-                                <video class="portfolio-video" src="project-2-video.mp4" autoplay loop muted playsinline controls>
+                                <video class="portfolio-video" 
+                                       src="project-2-video.mp4" 
+                                       autoplay 
+                                       loop 
+                                       muted 
+                                       playsinline 
+                                       controls>
                                     Your browser does not support the video tag.
                                 </video>
                             </div>
                         </div>
                         <div class="card-content">
                             <h3 class="card-title">Motion Graphics Reel</h3>
-                            <p class="card-text">A compilation of dynamic motion graphics created for various clients, all in one reel.</p>
+                            <p class="card-text">
+                                A compilation of dynamic motion graphics created for various clients, all in one reel.
+                            </A>
+                            <!-- No "Before/After" button needed for a video reel -->
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20 fade-in-section animated">
+        <section id="about" class="py-20 fade-in-section">
             <div class="container">
                 <div class="about-grid">
+                    <!-- This is your 'About Me' photo -->
                     <div class="about-image-container">
-                        <img src="atanu-photo.jpg" alt="Portrait of Atanu Debgharia" class="about-image animated-img">
+                        <img src="atanu-photo.jpg" alt="Portrait of Atanu Debgharia" class="about-image">
                     </div>
                     <div class="about-text">
                         <h2 class="section-title text-left">About the Artist</h2>
                         <h3 class="about-name">Hi, I'm Atanu Debgharia.</h3>
-                        <p class="about-bio">I'm the creative force behind RawFX-Studios, with over <strong>3 years of professional experience</strong> turning raw concepts into polished, high-impact visuals.</p>
-                        <p class="about-bio-secondary">I specialize in color grading, motion graphics, video editing, and photo design. My mission is to turn ideas into cinematic masterpieces.</p>
+                        <p class="about-bio">
+                            I'm the creative force behind RawFX-Studios, with over <strong>3 years of professional experience</strong> turning raw concepts into polished, high-impact visuals.
+                        </p>
+                        <p class="about-bio-secondary">
+                            My passion is simple: I make things look good. Whether it's finding the perfect colour grade, executing a seamless edit, or building an engaging motion graphic, I am obsessed with the details that take content from "good" to "unforgettable."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Niche CTA Section -->
+        <section class="cta-section fade-in-section">
+            <div class="container text-center">
+                <h2 class="cta-title">
+                    Have a specific project in mind?
+                </h2>
+                <p class="cta-subtitle">
+                    I thrive on unique challenges.
+                </WELCOME>
+                <p class="cta-niche-box">
+                    DM FOR YOUR SPECIFIC NICHE
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 fade-in-section">
+            <div class="container text-center">
+                <h2 class="section-title">Let's Collaborate</h2>
+                <p class="contact-subtitle">
+                    Ready to start your project? Get in touch today.
+                </p>
+                
+                <div class="contact-buttons">
+                    <a href="https://wa.me/918509422062" target="_blank" class="contact-button whatsapp">
+                        <ion-icon name="logo-whatsapp"></ion-icon>
+                        WhatsApp Me
+                    </a>
+                    <a href="tel:+918509422062" class="contact-button call">
+                        <ion-icon name="call-outline"></ion-icon>
+                        Call (+91) 85094 22062
+                    </a>
+                </div>
+
+                <div class="social-links-container">
+                    <p class="social-links-title">Find me on other platforms:</p>
+                    <div class="social-links-grid">
+                        <a href="https://www.instagram.com/atanu_debgharia" target="_blank" class="social-link" title="Instagram">
+                            <span class="sr-only">Instagram</span>
+                            <ion-icon name="logo-instagram"></ion-icon>
+                        </a>
+                        <a href="https://www.linkedin.com/in/atanu-debgharia-003837260" target="_blank" class="social-link" title="LinkedIn">
+                            <span class="sr-only">LinkedIn</span>
+                            <ion-icon name="logo-linkedin"></ion-icon>
+                        </a>
+                        <a href="https://www.facebook.com/share/1Jb9sKHKQm/" target="_blank" class="social-link" title="Facebook">
+                            <span class="sr-only">Facebook</span>
+                            <ion-icon name="logo-facebook"></ion-icon>
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="container text-center footer-content">
             <p class="footer-brand">Powered by RawFX-Studios</p>
@@ -484,131 +827,133 @@
         </div>
     </footer>
 
+    <!-- Embedded JavaScript -->
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- Hamburger Menu Fix ---
-        const menuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (menuButton && mobileMenu) {
-            menuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Particle Background ---
+            const canvas = document.getElementById('particle-canvas');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                let particles = [];
+                const particleCount = 100;
+                const particleColor = getComputedStyle(document.documentElement).getPropertyValue('--color-particle').trim() || 'rgba(224, 232, 255, 0.7)';
 
-        // --- Entrance Animations for sections/cards/images ---
-        function animateOnScroll(selector, className = 'is-visible') {
-            const elements = document.querySelectorAll(selector);
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add(className);
-                        obs.unobserve(entry.target);
+                const setCanvasSize = () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                };
+
+                class Particle {
+                    constructor() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.radius = Math.random() * 1.5 + 0.5;
+                        this.vx = (Math.random() - 0.5) * 0.5; 
+                        this.vy = (Math.random() - 0.5) * 0.5; 
                     }
+                    draw() {
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = particleColor;
+                        ctx.fill();
+                    }
+                    update() {
+                        this.x += this.vx;
+                        this.y += this.vy;
+                        if (this.x < 0) this.x = canvas.width;
+                        if (this.x > canvas.width) this.x = 0;
+                        if (this.y < 0) this.y = canvas.height;
+                        if (this.y > canvas.height) this.y = 0;
+                        this.draw();
+                    }
+                }
+
+                const initParticles = () => {
+                    particles = [];
+                    for (let i = 0; i < particleCount; i++) {
+                        particles.push(new Particle());
+                    }
+                };
+
+                const animateParticles = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(p => p.update());
+                    requestAnimationFrame(animateParticles);
+                };
+
+                window.addEventListener('resize', () => {
+                    setCanvasSize();
+                    initParticles();
                 });
-            }, { threshold: 0.2 });
-            elements.forEach(el => observer.observe(el));
-        }
-        animateOnScroll('.animated');
-        animateOnScroll('.card-animated');
-        animateOnScroll('.animated-img');
 
-        // --- Animated Counter ---
-        function animateCounter(id, speed = 60) {
-            const counter = document.getElementById(id);
-            if (!counter) return;
-            const target = +counter.getAttribute('data-target');
-            let count = 0;
-            const step = Math.ceil(target / speed);
-            function update() {
-                count += step;
-                if (count > target) count = target;
-                counter.textContent = count;
-                if (count < target) requestAnimationFrame(update);
-            }
-            update();
-        }
-        animateCounter('project-counter');
-
-        // --- Particle Animation ---
-        const canvas = document.getElementById('particle-canvas');
-        if (canvas) {
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            const particleCount = 100;
-            const particleColor = getComputedStyle(document.documentElement).getPropertyValue('--color-particle').trim() || 'rgba(224, 232, 255, 0.7)';
-            const setCanvasSize = () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            };
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.radius = Math.random() * 1.5 + 0.5;
-                    this.vx = (Math.random() - 0.5) * 0.5; 
-                    this.vy = (Math.random() - 0.5) * 0.5; 
-                }
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = particleColor;
-                    ctx.fill();
-                }
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    if (this.x < 0) this.x = canvas.width;
-                    if (this.x > canvas.width) this.x = 0;
-                    if (this.y < 0) this.y = canvas.height;
-                    if (this.y > canvas.height) this.y = 0;
-                    this.draw();
-                }
-            }
-            const initParticles = () => {
-                particles = [];
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push(new Particle());
-                }
-            };
-            const animateParticles = () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => p.update());
-                requestAnimationFrame(animateParticles);
-            };
-            window.addEventListener('resize', () => {
                 setCanvasSize();
                 initParticles();
-            });
-            setCanvasSize();
-            initParticles();
-            animateParticles();
-        }
+                animateParticles();
+            }
 
-        // --- Portfolio 'Before/After' Toggle ---
-        const toggleButtons = document.querySelectorAll('.portfolio-toggle');
-        toggleButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const card = button.closest('.portfolio-card');
-                if (!card) return;
-                const beforeContent = card.querySelector('.before-content');
-                const afterContent = card.querySelector('.after-content');
-                if (beforeContent && afterContent) {
-                    beforeContent.classList.toggle('hidden');
-                    afterContent.classList.toggle('hidden');
-                    if (beforeContent.classList.contains('hidden')) {
-                        button.textContent = 'Show Before';
-                    } else {
-                        button.textContent = 'Show After';
+            // --- Mobile Menu Toggle ---
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+
+            // --- Portfolio 'Before/After' Toggle ---
+            const toggleButtons = document.querySelectorAll('.portfolio-toggle');
+            
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const card = button.closest('.portfolio-card');
+                    if (!card) return;
+                    const beforeContent = card.querySelector('.before-content');
+                    const afterContent = card.querySelector('.after-content');
+
+                    if (beforeContent && afterContent) {
+                        beforeContent.classList.toggle('hidden');
+                        afterContent.classList.toggle('hidden');
+                        if (beforeContent.classList.contains('hidden')) {
+                            button.textContent = 'Show Before';
+                        } else {
+                            button.textContent = 'Show After';
+                        }
                     }
-                }
-            }); 
+                });
+            });
+
+            // --- Scroll-in Animations (for sections) ---
+            const sections = document.querySelectorAll('.fade-in-section');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
         });
-    });
     </script>
 </body>
 </html>
+
+
