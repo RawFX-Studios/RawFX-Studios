@@ -238,7 +238,7 @@
             margin: 0 auto;
         }
         
-        /* --- NEW: Hero Slide-Down Animation --- */
+        /* --- Hero Slide-Down Animation --- */
         .hero-content > * {
             opacity: 0; /* Hidden by default */
         }
@@ -340,11 +340,12 @@
         .portfolio-image-container {
             position: relative;
         }
-        .portfolio-image {
+        .portfolio-image, .portfolio-video {
             width: 100%;
-            height: 18rem;
+            height: 18rem; /* 72 */
             object-fit: cover;
             display: block;
+            background-color: #000; /* Black bg for video loading */
         }
         .card-content {
             padding: 1.5rem;
@@ -472,7 +473,7 @@
             font-size: 1.25rem;
         }
         
-        /* NEW: Themed contact buttons */
+        /* Themed contact buttons */
         .contact-button.whatsapp {
             background-color: transparent;
             color: #25D366;
@@ -548,7 +549,7 @@
             transform: translateY(0);
         }
         
-        /* --- NEW: Button Click Animation --- */
+        /* Button Click Animation */
         .nav-button, .hero-button, .portfolio-toggle, .contact-button {
             transition: all 0.3s ease, transform 0.1s ease;
         }
@@ -601,7 +602,7 @@
 </head>
 <body class="antialiased">
     
-    <!-- NEW: Particle Canvas -->
+    <!-- Particle Canvas -->
     <canvas id="particle-canvas"></canvas>
 
     <!-- Header / Navigation -->
@@ -688,16 +689,17 @@
                     Polished Work
                 </h2>
                 <div class="grid-2-col">
-                    <!-- Portfolio Item 1: Before & After -->
+
+                    <!-- Portfolio Item 1: Before & After (PHOTO) -->
                     <div class="glass-card portfolio-card">
                         <div class="portfolio-image-container">
-                            <!-- EDIT: Add your 'After' image/content -->
+                            <!-- This is your 'After' image -->
                             <div class="portfolio-content after-content">
-                                <img src="https://placehold.co/600x400/ffffff/0a0a0a?text=Vibrant+Grade+(After)" alt="Color graded photo" class="portfolio-image">
+                                <img src="project-1-after.jpg" alt="Color graded photo" class="portfolio-image">
                             </div>
-                            <!-- EDIT: Add your 'Before' image/content -->
+                            <!-- This is your 'Before' image -->
                             <div class="portfolio-content before-content hidden">
-                                <img src="https://placehold.co/600x400/7f8c8d/ffffff?text=Raw+Footage+(Before)" alt="Raw footage" class="portfolio-image">
+                                <img src="project-1-before.jpg" alt="Raw footage" class="portfolio-image">
                             </div>
                         </div>
                         <div class="card-content">
@@ -710,26 +712,32 @@
                             </button>
                         </div>
                     </div>
-                    <!-- Portfolio Item 2: Before & After -->
+
+                    <!-- Portfolio Item 2: VIDEO SHOWCASE -->
                     <div class="glass-card portfolio-card">
                         <div class="portfolio-image-container">
+                            <!-- This is your Video file -->
                             <div class="portfolio-content after-content">
-                                <img src="https://placehold.co/600x400/a0a0a0/0a0a0a?text=Motion+Graphic+(After)" alt="Motion Graphic" class="portfolio-image">
-                            </div>
-                            <div class="portfolio-content before-content hidden">
-                                <img src="https://placehold.co/600x400/4b5563/ffffff?text=Static+Graphic+(Before)" alt="Static Graphic" class="portfolio-image">
+                                <video class="portfolio-video" 
+                                       src="project-2-video.mp4" 
+                                       autoplay 
+                                       loop 
+                                       muted 
+                                       playsinline 
+                                       controls>
+                                    Your browser does not support the video tag.
+                                </video>
                             </div>
                         </div>
                         <div class="card-content">
-                            <h3 class="card-title">Motion Graphic Ad</h3>
+                            <h3 class="card-title">Motion Graphics Reel</h3>
                             <p class="card-text">
-                                Transformed a static graphic into a dynamic, eye-catching animated ad for social media.
-                            </p>
-                            <button class="portfolio-toggle">
-                                Show Before
-                            </button>
+                                A compilation of dynamic motion graphics created for various clients, all in one reel.
+                            </A>
+                            <!-- No "Before/After" button needed for a video reel -->
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -738,9 +746,9 @@
         <section id="about" class="py-20 fade-in-section">
             <div class="container">
                 <div class="about-grid">
-                    <!-- EDIT: Add your photo -->
+                    <!-- This is your 'About Me' photo -->
                     <div class="about-image-container">
-                        <img src="https://placehold.co/400x400/ffffff/0a0a0a?text=AD" alt="Portrait of Atanu Debgharia" class="about-image">
+                        <img src="atanu-photo.jpg" alt="Portrait of Atanu Debgharia" class="about-image">
                     </div>
                     <div class="about-text">
                         <h2 class="section-title text-left">About the Artist</h2>
@@ -764,7 +772,7 @@
                 </h2>
                 <p class="cta-subtitle">
                     I thrive on unique challenges.
-                </p>
+                </WELCOME>
                 <p class="cta-niche-box">
                     DM FOR YOUR SPECIFIC NICHE
                 </p>
@@ -823,53 +831,44 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- NEW: Particle Background ---
+            // --- Particle Background ---
             const canvas = document.getElementById('particle-canvas');
             if (canvas) {
                 const ctx = canvas.getContext('2d');
                 let particles = [];
                 const particleCount = 100;
-                // Get the computed style of --color-particle
                 const particleColor = getComputedStyle(document.documentElement).getPropertyValue('--color-particle').trim() || 'rgba(224, 232, 255, 0.7)';
 
-                // Set canvas size
                 const setCanvasSize = () => {
                     canvas.width = window.innerWidth;
                     canvas.height = window.innerHeight;
                 };
 
-                // Particle class
                 class Particle {
                     constructor() {
                         this.x = Math.random() * canvas.width;
                         this.y = Math.random() * canvas.height;
                         this.radius = Math.random() * 1.5 + 0.5;
-                        this.vx = (Math.random() - 0.5) * 0.5; // Slow horizontal velocity
-                        this.vy = (Math.random() - 0.5) * 0.5; // Slow vertical velocity
+                        this.vx = (Math.random() - 0.5) * 0.5; 
+                        this.vy = (Math.random() - 0.5) * 0.5; 
                     }
-
                     draw() {
                         ctx.beginPath();
                         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                         ctx.fillStyle = particleColor;
                         ctx.fill();
                     }
-
                     update() {
                         this.x += this.vx;
                         this.y += this.vy;
-
-                        // Boundary check (wrap around)
                         if (this.x < 0) this.x = canvas.width;
                         if (this.x > canvas.width) this.x = 0;
                         if (this.y < 0) this.y = canvas.height;
                         if (this.y > canvas.height) this.y = 0;
-
                         this.draw();
                     }
                 }
 
-                // Initialize particles
                 const initParticles = () => {
                     particles = [];
                     for (let i = 0; i < particleCount; i++) {
@@ -877,20 +876,17 @@
                     }
                 };
 
-                // Animation loop
                 const animateParticles = () => {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     particles.forEach(p => p.update());
                     requestAnimationFrame(animateParticles);
                 };
 
-                // Handle window resize
                 window.addEventListener('resize', () => {
                     setCanvasSize();
                     initParticles();
                 });
 
-                // Start
                 setCanvasSize();
                 initParticles();
                 animateParticles();
